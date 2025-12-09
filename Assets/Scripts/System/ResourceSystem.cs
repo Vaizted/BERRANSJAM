@@ -5,22 +5,22 @@ using UnityEngine;
 
 public class ResourceSystem : Singleton<ResourceSystem>
 {
-   // public List<> Units { get; private set; }
-   // private Dictionary<UnitType, ScriptableUnitBase> UnitDict;
-   //
-   // protected override void Awake()
-   // {
-   //     base.Awake();
-   //     AssembleResources();
-   // }
-   //
-   // private void AssembleResources()
-   // {
-   //     Units = Resources.LoadAll<ScriptableUnitBase>("Cows").ToList();
-   //     UnitDict = Units.ToDictionary(r => r.UnitType, r => r);
-   // }
-   // 
-   // public ScriptableUnitBase GetUnit(UnitType type) => UnitDict[type];
-   // public ScriptableUnitBase GetRandomUnit() => Units[Random.Range(0, Units.Count)];
-   //
+    public List<UniverseSO> Universes { get; private set; }
+    private Dictionary<UniverseType, UniverseSO> UniverseDict;
+   
+    protected override void Awake()
+    {
+        base.Awake();
+        AssembleResources();
+    }
+   
+    private void AssembleResources()
+    {
+        Universes = Resources.LoadAll<UniverseSO>("Universes").ToList();
+        UniverseDict = Universes.ToDictionary(r => r.UniverseType, r => r);
+    }
+    
+    public UniverseSO GetUniverse(UniverseType type) => UniverseDict[type];
+    public UniverseSO GetRandomUniverse() => Universes[Random.Range(0, Universes.Count)];
+   
 }
