@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7f2dd67e30233247a782688d7557661, type: 3}
   m_Name: Overworld
   m_EditorClassIdentifier: Assembly-CSharp::UniverseSO
-  type: 0
+  UniverseType: 0
   StartChunk: {fileID: 0}
   Chunks: []
