@@ -183,7 +183,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 33.75
+  orthographic size: 5.625
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -286,8 +286,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.2D.Runtime::UnityEngine.Rendering.Universal.PixelPerfectCamera
   m_ComponentVersion: 1
   m_AssetsPPU: 16
-  m_RefResolutionX: 1920
-  m_RefResolutionY: 1080
+  m_RefResolutionX: 320
+  m_RefResolutionY: 180
   m_CropFrame: 0
   m_GridSnapping: 0
   m_FilterMode: 0
@@ -650,6 +650,63 @@ Transform:
   - {fileID: 682204509}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1239366285
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5258487283442034160, guid: e8adc2f9c50bf594c9dbb0f30f094014, type: 3}
+      propertyPath: m_Name
+      value: Parallax Background
+      objectReference: {fileID: 0}
+    - target: {fileID: 6437765243008859902, guid: e8adc2f9c50bf594c9dbb0f30f094014, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 9.80085
+      objectReference: {fileID: 0}
+    - target: {fileID: 6437765243008859902, guid: e8adc2f9c50bf594c9dbb0f30f094014, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -7.44371
+      objectReference: {fileID: 0}
+    - target: {fileID: 6437765243008859902, guid: e8adc2f9c50bf594c9dbb0f30f094014, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -4.59081
+      objectReference: {fileID: 0}
+    - target: {fileID: 6437765243008859902, guid: e8adc2f9c50bf594c9dbb0f30f094014, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6437765243008859902, guid: e8adc2f9c50bf594c9dbb0f30f094014, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6437765243008859902, guid: e8adc2f9c50bf594c9dbb0f30f094014, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6437765243008859902, guid: e8adc2f9c50bf594c9dbb0f30f094014, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6437765243008859902, guid: e8adc2f9c50bf594c9dbb0f30f094014, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6437765243008859902, guid: e8adc2f9c50bf594c9dbb0f30f094014, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6437765243008859902, guid: e8adc2f9c50bf594c9dbb0f30f094014, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e8adc2f9c50bf594c9dbb0f30f094014, type: 3}
 --- !u!1 &1264151999
 GameObject:
   m_ObjectHideFlags: 0
@@ -894,3 +951,4 @@ SceneRoots:
   - {fileID: 1561124165}
   - {fileID: 789794941}
   - {fileID: 728013355}
+  - {fileID: 1239366285}
