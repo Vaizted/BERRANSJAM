@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7f2dd67e30233247a782688d7557661, type: 3}
   m_Name: Nether
   m_EditorClassIdentifier: Assembly-CSharp::UniverseSO
-  UniverseType: 0
+  UniverseType: 1
   StartChunk: {fileID: 7833348807113147090, guid: 58dd859ff5beaca458c17a46f1e3a980, type: 3}
   Chunks:
   - {fileID: 7833348807113147090, guid: 58dd859ff5beaca458c17a46f1e3a980, type: 3}
