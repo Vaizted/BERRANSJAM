@@ -6,6 +6,7 @@ using UnityEngine;
 public class UniverseSO : ScriptableObject
 {
     public UniverseType UniverseType;
+    public ParallaxBackground ParallaxBackground;
     public UniverseChunk StartChunk;
     public List<UniverseChunk> Chunks;
 }

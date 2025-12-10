@@ -25,6 +25,9 @@ public class GameManager : Singleton<GameManager>
             case GameState.Start:
                 HandleStart();
                 break;
+            case GameState.StartGame:
+                HandleStartGame();
+                break;
             case GameState.End:
                 HandleEnd();
                 break;
@@ -40,6 +43,9 @@ public class GameManager : Singleton<GameManager>
     {
         UniverseManager.instance.StartGenerate();
     }
+    void HandleStartGame()
+    {
+    }
 
     void HandleEnd()
     {
@@ -50,5 +56,6 @@ public class GameManager : Singleton<GameManager>
 public enum GameState
 {
     Start,
+    StartGame,
     End
 }

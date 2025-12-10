@@ -17,6 +17,7 @@ public class UniverseManager : Singleton<UniverseManager>
     float nextSpawnX = 0f;
     
     private GameObject player;
+    private GameObject currentParallax;
     private UniverseType currentUniverse;
     private bool generate = false;
 
@@ -24,13 +25,12 @@ public class UniverseManager : Singleton<UniverseManager>
     {
         currentUniverse = StartUniverse;
 
-        var startChunk = Instantiate(StartChunk, Vector3.zero, Quaternion.identity);
-        activeChunks.Enqueue(startChunk);
-        nextSpawnX += chunkSize;
+        SpawnStartChunk();
 
-        player = Instantiate(playerPrefab, Vector3.up, Quaternion.identity).gameObject;
-
+        player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity).gameObject;
         FindFirstObjectByType<CameraFollow>().SetTarget(player.transform);
+
+        currentParallax = Instantiate(ResourceSystem.instance.GetUniverse(currentUniverse).ParallaxBackground, new Vector3(0, 3.5f, 0), Quaternion.identity).gameObject;
 
         generate = true;
     }
@@ -61,6 +61,12 @@ public class UniverseManager : Singleton<UniverseManager>
         activeChunks.Enqueue(chunk);
         nextSpawnX += chunkSize;
     }
+    void SpawnStartChunk()
+    {
+        var chunk = ChunkFactory.instance.SpawnStartChunk(new Vector3(nextSpawnX, 0, 0), currentUniverse);
+        activeChunks.Enqueue(chunk);
+        nextSpawnX += chunkSize;
+    }
 
     void DespawnChunk()
     {
@@ -78,8 +84,10 @@ public class UniverseManager : Singleton<UniverseManager>
         activeChunks.Clear();
 
         nextSpawnX = player.transform.position.x;
-        SpawnChunk();
+        SpawnStartChunk();
 
+        Destroy(currentParallax);
+        currentParallax = Instantiate(ResourceSystem.instance.GetUniverse(currentUniverse).ParallaxBackground, player.transform.position + new Vector3(0, 3.5f, 0), Quaternion.identity).gameObject;
     }
 
     public void StopGenerate()

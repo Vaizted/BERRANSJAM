@@ -1,4 +1,5 @@
 using System;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -26,6 +27,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
     #endregion
 
     private float time;
+    private bool canMove = true;
 
     private void Awake()
     {
@@ -37,10 +39,28 @@ public class PlayerController : MonoBehaviour, IPlayerController
         moveAction = input.actions.FindAction("Move");
         jumpAction = input.actions.FindAction("Jump");
         portalAction = input.actions.FindAction("Portal");
+
+        GameManager.OnBeforeGameStateChanged += OnGameChanged;
+        OnGameChanged(GameManager.instance.State);
+    }
+
+    private void OnGameChanged(GameState state)
+    {
+        if (state == GameState.Start || state == GameState.End)
+        {
+            canMove = false;
+        }
+        else
+        {
+            canMove = true;
+        }
     }
 
     private void Update()
     {
+        if (!canMove)
+            return;
+
         time += Time.deltaTime;
         GatherInput();
     }
@@ -70,6 +90,9 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
     private void FixedUpdate()
     {
+        if (!canMove)
+            return;
+
         CheckCollisions();
 
         HandleJump();

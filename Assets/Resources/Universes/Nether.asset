@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Nether
   m_EditorClassIdentifier: Assembly-CSharp::UniverseSO
   UniverseType: 1
+  ParallaxBackground: {fileID: 4587625159118152166, guid: e8adc2f9c50bf594c9dbb0f30f094014, type: 3}
   StartChunk: {fileID: 7833348807113147090, guid: 58dd859ff5beaca458c17a46f1e3a980, type: 3}
   Chunks:
   - {fileID: 7833348807113147090, guid: 58dd859ff5beaca458c17a46f1e3a980, type: 3}
