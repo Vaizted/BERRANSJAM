@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour, IPlayerController
 {
     [SerializeField] private ScriptableStats stats;
+    [SerializeField] private PlayerInput input;
     private Rigidbody2D rb;
     private CapsuleCollider2D col;
     private FrameInput frameInput;
@@ -14,6 +15,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
     private InputAction jumpAction;
     private InputAction moveAction;
+    private InputAction portalAction;
 
     #region Interface
 
@@ -32,8 +34,9 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
         cachedQueryStartInColliders = Physics2D.queriesStartInColliders;
 
-        moveAction = InputSystem.actions.FindAction("Move");
-        jumpAction = InputSystem.actions.FindAction("Jump");
+        moveAction = input.actions.FindAction("Move");
+        jumpAction = input.actions.FindAction("Jump");
+        portalAction = input.actions.FindAction("Portal");
     }
 
     private void Update()
@@ -48,7 +51,8 @@ public class PlayerController : MonoBehaviour, IPlayerController
         {
             JumpDown = jumpAction.WasPressedThisFrame(),
             JumpHeld = jumpAction.IsPressed(),
-            Move = moveAction.ReadValue<Vector2>()
+            Move = moveAction.ReadValue<Vector2>(),
+            PortalDown = portalAction.WasPressedThisFrame()
         };
 
         if (stats.SnapInput)
@@ -71,6 +75,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
         HandleJump();
         HandleDirection();
         HandleGravity();
+        HandlePortal();
 
         ApplyMovement();
     }
@@ -183,6 +188,15 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
     #endregion
 
+    #region Portal
+    void HandlePortal()
+    {
+        if (frameInput.PortalDown)
+        {
+            UniverseManager.instance.SwapUniverse(UniverseType.Nether);
+        }
+    }
+    #endregion
     private void ApplyMovement() => rb.linearVelocity = frameVelocity;
 
 #if UNITY_EDITOR
@@ -198,6 +212,7 @@ public struct FrameInput
     public bool JumpDown;
     public bool JumpHeld;
     public Vector2 Move;
+    public bool PortalDown;
 }
 
 public interface IPlayerController

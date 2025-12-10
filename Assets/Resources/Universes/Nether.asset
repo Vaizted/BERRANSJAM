@@ -10,10 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e7f2dd67e30233247a782688d7557661, type: 3}
-  m_Name: Overworld
+  m_Name: Nether
   m_EditorClassIdentifier: Assembly-CSharp::UniverseSO
   UniverseType: 0
-  StartChunk: {fileID: 7833348807113147090, guid: 84f608bd691a9f0478c59f367f0d9e73, type: 3}
+  StartChunk: {fileID: 7833348807113147090, guid: 58dd859ff5beaca458c17a46f1e3a980, type: 3}
   Chunks:
-  - {fileID: 7833348807113147090, guid: 84f608bd691a9f0478c59f367f0d9e73, type: 3}
-  - {fileID: 7833348807113147090, guid: 84f608bd691a9f0478c59f367f0d9e73, type: 3}
+  - {fileID: 7833348807113147090, guid: 58dd859ff5beaca458c17a46f1e3a980, type: 3}
