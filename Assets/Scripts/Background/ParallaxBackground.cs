@@ -1,9 +1,12 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Mono.Cecil;
 using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
+using static UnityEditor.PlayerSettings;
 
 public class ParallaxBackground : MonoBehaviour
 {
@@ -41,10 +44,36 @@ public class ParallaxBackground : MonoBehaviour
         foreach (ParallaxLayer layer in layers)
         {
             UpdatePosition(layer, deltaMovement);
+
+            if (cam.position.x + layer.SpriteWidth > layer.ActiveSegments.Last().transform.position.x)
+            {
+                Vector3 pos = layer.ActiveSegments.Last().transform.position + new Vector3(layer.SpriteWidth, 0, 0);
+                CreateSegment(layer, pos, layer.ActiveSegments.Count);
+                RemoveSegment(layer, layer.ActiveSegments.First());
+            }
+            else if (cam.position.x - layer.SpriteWidth < layer.ActiveSegments.First().transform.position.x)
+            {
+                Vector3 pos = layer.ActiveSegments.First().transform.position - new Vector3(layer.SpriteWidth, 0, 0);
+                CreateSegment(layer, pos, 0);
+                RemoveSegment(layer, layer.ActiveSegments.Last());
+            }
         }
 
         previousCamPos = cam.position;
     }
+
+    private void CreateSegment(ParallaxLayer layer, Vector3 pos, int index)
+    {
+        GameObject segment = Instantiate(layer.renderer.gameObject, pos, Quaternion.identity, layer.transform);
+        layer.ActiveSegments.Insert(index, segment);
+    }
+
+    private void RemoveSegment(ParallaxLayer layer, GameObject segment)
+    {
+        Destroy(segment);
+        layer.ActiveSegments.Remove(segment);
+    }
+
 
     private void UpdatePosition(ParallaxLayer layer, Vector3 deltaMovement)
     {
@@ -56,21 +85,19 @@ public class ParallaxBackground : MonoBehaviour
     private void InitializeLayer(ParallaxLayer layer)
     {
         float spriteWidth = layer.SpriteWidth;
-        int loopsNeeded = LoopsNeeded(spriteWidth);
-
-        float screenWidth = Camera.main.orthographicSize * 2f * Camera.main.aspect / 2;
+        float screenWidth = Camera.main.orthographicSize * 2f * Camera.main.aspect;
+        int loopsNeeded = LoopsNeeded(spriteWidth, screenWidth);
+        float offsetX = loopsNeeded * spriteWidth / 2;
 
         for (int i = 0; i < loopsNeeded; i++)
         {
-            Vector3 pos = layer.transform.position - new Vector3(screenWidth, 0, 0) + Vector3.right * spriteWidth * i;
-            GameObject segment = Instantiate(layer.renderer.gameObject, pos - Vector3.left, Quaternion.identity, layer.transform);
-            layer.ActiveSegments.Add(segment);
+            Vector3 pos = layer.transform.position - new Vector3(offsetX - spriteWidth / 2, 0, 0) + Vector3.right * spriteWidth * i;
+            CreateSegment(layer, pos, layer.ActiveSegments.Count);
         }
     }
 
-    private int LoopsNeeded(float spriteWidth) 
+    private int LoopsNeeded(float spriteWidth, float screenWidth) 
     {
-        float screenWidth = Camera.main.orthographicSize * 2f * Camera.main.aspect;
         float margin = spriteWidth * 2f;
         return Mathf.CeilToInt((screenWidth + margin) / spriteWidth);
     }
