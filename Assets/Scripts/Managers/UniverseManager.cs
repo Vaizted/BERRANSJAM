@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.MPE;
 using UnityEngine;
 
 public class UniverseManager : Singleton<UniverseManager>
 {
     [SerializeField] private UniverseType StartUniverse;
-    [SerializeField] private UniverseChunk StartChunk;
     [SerializeField] private PlayerController playerPrefab;
     [SerializeField] private float chunkSize = 40f;
 
@@ -57,10 +57,11 @@ public class UniverseManager : Singleton<UniverseManager>
 
     void SpawnChunk()
     {
-        var chunk = ChunkFactory.instance.SpawnChunk(new Vector3(nextSpawnX, 0, 0), currentUniverse);
+        var chunk = ChunkFactory.instance.SpawnRandomChunk(new Vector3(nextSpawnX, 0, 0), currentUniverse);
         activeChunks.Enqueue(chunk);
         nextSpawnX += chunkSize;
     }
+
     void SpawnStartChunk()
     {
         var chunk = ChunkFactory.instance.SpawnStartChunk(new Vector3(nextSpawnX, 0, 0), currentUniverse);
