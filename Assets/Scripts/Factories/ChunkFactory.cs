@@ -2,21 +2,21 @@ using UnityEngine;
 
 public class ChunkFactory : Singleton<ChunkFactory>
 {
-    public UniverseChunk SpawnRandomChunk(Vector3 position, UniverseType universe)
+    public UniverseChunk SpawnRandomChunk(UniverseType universe)
     {
-        var scriptable = ResourceSystem.instance.GetUniverse(universe);
+        UniverseSO scriptable = ResourceSystem.instance.GetUniverse(universe);
 
-        var chunk = Instantiate(scriptable.Chunks[Random.Range(0, scriptable.Chunks.Count)], position, Quaternion.identity);
+        UniverseChunk chunk = Instantiate(scriptable.Chunks[Random.Range(0, scriptable.Chunks.Count)]);
 
         //add extra stuf to chunk?
 
         return chunk;
     }
-    public StartChunk SpawnStartChunk(Vector3 position, UniverseType universe)
+    public StartChunk SpawnStartChunk(UniverseType universe)
     {
-        var scriptable = ResourceSystem.instance.GetUniverse(universe);
+        UniverseSO scriptable = ResourceSystem.instance.GetUniverse(universe);
 
-        var chunk = Instantiate(scriptable.StartChunk, position, Quaternion.identity);
+        StartChunk chunk = Instantiate(scriptable.StartChunk, Vector3.zero, Quaternion.identity);
 
         //add extra stuf to chunk?
 

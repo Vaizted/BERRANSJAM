@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UniverseSO
   UniverseType: 1
   ParallaxBackground: {fileID: 4587625159118152166, guid: e8adc2f9c50bf594c9dbb0f30f094014, type: 3}
-  StartChunk: {fileID: 7833348807113147090, guid: 58dd859ff5beaca458c17a46f1e3a980, type: 3}
+  StartChunk: {fileID: 9046805389061600118, guid: 58dd859ff5beaca458c17a46f1e3a980, type: 3}
   Chunks:
-  - {fileID: 7833348807113147090, guid: 58dd859ff5beaca458c17a46f1e3a980, type: 3}
+  - {fileID: 934283390678159112, guid: 179dd8f07956aad4e9dc5de4cb4387b7, type: 3}
+  universeChaser: {fileID: 3395850911827586026, guid: 04e6d6ecf978bd54dbc27b6cb9b2ae03, type: 3}

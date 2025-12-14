@@ -9,6 +9,7 @@ public class UniverseSO : ScriptableObject
     public ParallaxBackground ParallaxBackground;
     public StartChunk StartChunk;
     public List<UniverseChunk> Chunks;
+    public Chaser universeChaser;
 }
 
 [Serializable]

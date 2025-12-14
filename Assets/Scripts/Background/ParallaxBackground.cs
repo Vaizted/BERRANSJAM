@@ -1,12 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Mono.Cecil;
-using NUnit.Framework;
-using UnityEditor;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
-using static UnityEditor.PlayerSettings;
 
 public class ParallaxBackground : MonoBehaviour
 {
@@ -96,7 +90,7 @@ public class ParallaxBackground : MonoBehaviour
         }
     }
 
-    private int LoopsNeeded(float spriteWidth, float screenWidth) 
+    private int LoopsNeeded(float spriteWidth, float screenWidth)
     {
         float margin = spriteWidth * 2f;
         return Mathf.CeilToInt((screenWidth + margin) / spriteWidth);

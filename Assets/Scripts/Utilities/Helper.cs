@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -10,9 +9,9 @@ public static class Helper
     public static Camera Camera
     {
         get
-        { 
+        {
             if (camera == null) { camera = Camera.main; }
-            return camera; 
+            return camera;
         }
     }
 
@@ -22,7 +21,7 @@ public static class Helper
     /// </summary>
     public static WaitForSeconds GetWait(float time)
     {
-        if(m_WaitDictionary.TryGetValue(time, out var wait)) return wait;
+        if (m_WaitDictionary.TryGetValue(time, out var wait)) return wait;
 
         m_WaitDictionary[time] = new WaitForSeconds(time);
         return m_WaitDictionary[time];

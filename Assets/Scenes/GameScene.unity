@@ -695,11 +695,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UniverseManager
   StartUniverse: 0
-  StartChunk: {fileID: 7833348807113147090, guid: 84f608bd691a9f0478c59f367f0d9e73, type: 3}
   playerPrefab: {fileID: 3544925311972749120, guid: 3e17eb4b310a8f94792e29048c702c0f, type: 3}
-  chunkSize: 40
-  spawnAhead: 60
-  despawnBehind: 120
+  chunksAhead: 2
+  chunksBehind: 2
+  parallaxHeight: 3
 --- !u!1 &1561124164
 GameObject:
   m_ObjectHideFlags: 0

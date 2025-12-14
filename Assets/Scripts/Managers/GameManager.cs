@@ -20,6 +20,7 @@ public class GameManager : Singleton<GameManager>
         OnBeforeGameStateChanged?.Invoke(newState);
 
         State = newState;
+
         switch (newState)
         {
             case GameState.Start:
@@ -36,15 +37,18 @@ public class GameManager : Singleton<GameManager>
         }
 
         OnAfterGameStateChanged?.Invoke(newState);
-        UnityEngine.Debug.Log($"New state: {newState}");
+        Debug.Log($"New state: {newState}");
     }
 
     void HandleStart()
     {
         UniverseManager.instance.StartGenerate();
+        ChangeState(GameState.StartGame);
     }
+
     void HandleStartGame()
     {
+
     }
 
     void HandleEnd()
