@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour, IPlayerController
 {
     [SerializeField] private ScriptableStats stats;
     [SerializeField] private PlayerInput input;
+    [SerializeField] private Animator animator;
+    [SerializeField] private SpriteRenderer playerSprite;
     private Rigidbody2D rb;
     private CapsuleCollider2D col;
     private FrameInput frameInput;
@@ -52,6 +54,11 @@ public class PlayerController : MonoBehaviour, IPlayerController
         else
         {
             canMove = true;
+        }
+
+        if (state == GameState.End)
+        {
+            animator.SetTrigger("Death");
         }
     }
 
@@ -121,6 +128,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
         // Landed on the Ground
         if (!grounded && groundHit)
         {
+            animator.SetBool("Grounded", true);
             grounded = true;
             coyoteUsable = true;
             bufferedJumpUsable = true;
@@ -130,6 +138,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
         // Left the Ground
         else if (grounded && !groundHit)
         {
+            animator.SetBool("Grounded", false);
             grounded = false;
             frameLeftGrounded = time;
             GroundedChanged?.Invoke(false, 0);
@@ -170,6 +179,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
         bufferedJumpUsable = false;
         coyoteUsable = false;
         frameVelocity.y = stats.JumpPower;
+        animator.SetTrigger("Jump");
         Jumped?.Invoke();
     }
 
@@ -183,10 +193,32 @@ public class PlayerController : MonoBehaviour, IPlayerController
         {
             var deceleration = grounded ? stats.GroundDeceleration : stats.AirDeceleration;
             frameVelocity.x = Mathf.MoveTowards(frameVelocity.x, 0, deceleration * Time.fixedDeltaTime);
+
+            if (rb.linearVelocity.x < 0)
+            {
+                playerSprite.flipX = true;
+            }
+            else if(rb.linearVelocity.x > 0)
+            {
+                playerSprite.flipX = false;
+            }
+
+                animator.SetBool("Running", false);
         }
         else
         {
             frameVelocity.x = Mathf.MoveTowards(frameVelocity.x, frameInput.Move.x * stats.MaxSpeed, stats.Acceleration * Time.fixedDeltaTime);
+
+            if (rb.linearVelocity.x < 0)
+            {
+                playerSprite.flipX = true;
+            }
+            else if(rb.linearVelocity.x > 0)
+            {
+                playerSprite.flipX = false;
+            }
+
+            animator.SetBool("Running", true);
         }
     }
 
