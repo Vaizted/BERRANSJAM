@@ -2,19 +2,25 @@ using UnityEngine;
 
 public class Chaser : MonoBehaviour
 {
-    public Transform player;
-    public float baseSpeed = 4f;
-    public float maxSpeed = 10f;
-    public float rampDuration = 120f;
+    [SerializeField] private Animator animator;
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Transform player;
+    [SerializeField] private float baseSpeed = 4f;
+    [SerializeField] private float maxSpeed = 10f;
+    [SerializeField] private float rampDuration = 240f;
 
+    private Rigidbody2D playerRigidBody;
     private float currentSpeed;
     private float elapsedTime;
+    private bool isPlayerKnocked = false;
+    private bool isPlayerCaught = false;
 
     private void Start()
     {
         if (player == null)
         {
             player = GameObject.FindGameObjectWithTag("Player").transform;
+            playerRigidBody = player.GetComponent<Rigidbody2D>();
         }
 
         currentSpeed = baseSpeed;
@@ -23,24 +29,59 @@ public class Chaser : MonoBehaviour
 
     private void Update()
     {
-        if (player != null)
-        {
-            elapsedTime += Time.deltaTime;
+        if (player == null) return;
 
-            float t = Mathf.Clamp01(elapsedTime / rampDuration);
-            currentSpeed = Mathf.Lerp(baseSpeed, maxSpeed, t);
+        Vector3 offset = player.position - transform.position;
+        if (offset.sqrMagnitude < 0.0001f) return;
 
-            Vector3 direction = (player.position - transform.position).normalized;
-            transform.position += direction * currentSpeed * Time.deltaTime;
-        }
+        elapsedTime += Time.deltaTime;
+
+        float time = Mathf.Clamp01(elapsedTime / rampDuration);
+        currentSpeed = Mathf.Lerp(baseSpeed, maxSpeed, time);
+
+        Vector3 direction = offset.normalized;
+        transform.position += direction * currentSpeed * Time.deltaTime;
+
+        spriteRenderer.flipX = direction.x > 0f;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (!collision.gameObject.CompareTag("Player")) return;
+        if (playerRigidBody == null) return;
+
+        if (GameManager.instance.State != GameState.End)
         {
-            Debug.Log("Player caught by the enemy!");
+            animator.SetTrigger("Attack");
+
+            Debug.Log("Player attacked by the chaser!");
             GameManager.instance.ChangeState(GameState.End);
         }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (!collision.gameObject.CompareTag("Player")) return;
+        if (playerRigidBody == null) return;
+        if (!(isPlayerKnocked && playerRigidBody.linearVelocity.magnitude < 0.1f)) return;
+
+        if (!isPlayerCaught)
+        {
+            Debug.Log("Player caught by the chaser!");
+            animator.SetTrigger("Catch");
+            isPlayerCaught = true;
+        }            
+    }
+
+    public void AttackPlayer()
+    {
+        Vector2 knockbackDirection = (player.position - transform.position).normalized;
+
+        knockbackDirection.y += 0.7f;
+        knockbackDirection.Normalize();
+
+        playerRigidBody.AddForce(knockbackDirection * 10f, ForceMode2D.Impulse);
+
+        isPlayerKnocked = true;
     }
 }
